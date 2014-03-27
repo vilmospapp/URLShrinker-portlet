@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.1.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_1_0.dtd">
+<service-builder package-path="hu.vilmospapp.urlshrinker" auto-namespace-tables="false" >
+	<author>Vilmos Papp</author>
+	<namespace>UrlShrinker</namespace>
+
+	<entity name="Url" local-service="true" remote-service="true" uuid="true">
+		<column name="urlId" type="long" primary="true"></column>
+		<column name="userId" type="long"></column>
+		<column name="companyId" type="long"></column>
+		<column name="groupId" type="long"></column>
+		<column name="hash" type="String" primary="false"></column>
+		<column name="originalUrl" type="String"></column>
+		<column name="privateUrl" type="boolean"></column>
+		<column name="protectedUrl" type="boolean"></column>
+		<column name="password" type="String"></column>
+		<column name="createdDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<column name="archived" type="boolean"></column>
+		<column name="customUrl" type="boolean"></column>
+		<column name="qrcode" type="boolean"></column>
+		<column name="statistics" type="boolean"></column>
+
+		<finder name="C_G_U" return-type="long">
+			<finder-column name="companyId"></finder-column>
+			<finder-column name="groupId"></finder-column>
+			<finder-column name="userId"></finder-column>
+		</finder>
+		<finder name="C_G_H" return-type="Collection" unique="true">
+			<finder-column name="companyId"></finder-column>
+			<finder-column name="groupId"></finder-column>
+			<finder-column name="hash"></finder-column>
+		</finder>
+		<finder name="C_G_H_P_P_A" return-type="Collection">
+			<finder-column name="companyId"></finder-column>
+			<finder-column name="groupId"></finder-column>
+			<finder-column name="hash"></finder-column>
+			<finder-column name="privateUrl"></finder-column>
+			<finder-column name="protectedUrl"></finder-column>
+			<finder-column name="archived"></finder-column>
+		</finder>
+		<finder name="C_G_H_P_P" return-type="Collection">
+			<finder-column name="companyId"></finder-column>
+			<finder-column name="groupId"></finder-column>
+			<finder-column name="hash"></finder-column>
+			<finder-column name="privateUrl"></finder-column>
+			<finder-column name="protectedUrl"></finder-column>
+		</finder>
+		<finder name="C_G_H_Private_A" return-type="Colection">
+			<finder-column name="companyId"></finder-column>
+			<finder-column name="groupId"></finder-column>
+			<finder-column name="hash"></finder-column>
+			<finder-column name="privateUrl"></finder-column>
+			<finder-column name="archived"></finder-column>
+		</finder>
+	</entity>
+	<exceptions>
+		<exception>NoSuchUrlException</exception>
+	</exceptions>
+</service-builder>

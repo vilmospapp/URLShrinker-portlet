@@ -1,0 +1,1 @@
+Liferay.Service.register("Liferay.Service.UrlShrinker", "hu.vilmospapp.urlshrinker.service", "URLShrinker-portlet");

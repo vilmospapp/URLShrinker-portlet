@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+	<service name="Plugin_UrlShrinker_UrlService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="hu.vilmospapp.urlshrinker.service.http.UrlServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="UrlServiceSoap" />
+		<parameter name="wsdlServiceElement" value="UrlServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_UrlShrinker_UrlService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.urlshrinker.vilmospapp.hu" />
+	</service>
+</deployment>

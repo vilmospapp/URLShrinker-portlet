@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="false" auto-import="false">
+	<import class="hu.vilmospapp.urlshrinker.model.Url" />
+	<class name="hu.vilmospapp.urlshrinker.model.impl.UrlImpl" table="Url">
+		<cache usage="read-write" />
+		<id name="urlId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="hash" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="originalUrl" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="privateUrl" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="protectedUrl" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="password" type="com.liferay.portal.dao.orm.hibernate.StringType" column="password_" />
+		<property name="createdDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="archived" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="customUrl" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="qrcode" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="statistics" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+	</class>
+</hibernate-mapping>

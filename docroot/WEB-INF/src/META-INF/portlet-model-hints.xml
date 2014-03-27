@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="hu.vilmospapp.urlshrinker.model.Url">
+		<field name="uuid" type="String" />
+		<field name="urlId" type="long" />
+		<field name="userId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="hash" type="String" />
+		<field name="originalUrl" type="String" />
+		<field name="privateUrl" type="boolean" />
+		<field name="protectedUrl" type="boolean" />
+		<field name="password" type="String" />
+		<field name="createdDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="archived" type="boolean" />
+		<field name="customUrl" type="boolean" />
+		<field name="qrcode" type="boolean" />
+		<field name="statistics" type="boolean" />
+	</model>
+</model-hints>
