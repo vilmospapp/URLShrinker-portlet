@@ -8,11 +8,13 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Form;
+import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.NativeButton;
 import com.vaadin.ui.PasswordField;
@@ -36,6 +38,10 @@ public class UrlFormLayout extends VerticalLayout {
 
 		final Form urlForm = new UrlForm(urlItem);
 
+		_formLayout = (GridLayout)urlForm.getLayout();
+
+		urlForm.setWidth(100, Sizeable.UNITS_PERCENTAGE);
+
 		addComponent(urlForm);
 
 		urlForm.setWriteThrough(false); // we want explicit 'apply'
@@ -47,12 +53,9 @@ public class UrlFormLayout extends VerticalLayout {
 
 		// Determines which properties are shown, and in which order:
 		urlForm.setVisibleItemProperties(Arrays.asList(new String[] {
-			"originalUrl", "privateUrl", "protectedUrl", "password", "qrcode", 
-			"statistics", "archive", "customUrl", "hash"}));
-
-		HorizontalLayout buttons = new HorizontalLayout();
-
-		buttons.setSpacing(true);
+			"originalUrl", "privateUrl", "protectedUrl", "password",
+			"reEnterPassword", "qrcode", "statistics", "archive", "customUrl",
+			"hash"}));
 
 		final CheckBox customUrl = (CheckBox)urlForm.getField(
 			"customUrl");
@@ -69,11 +72,15 @@ public class UrlFormLayout extends VerticalLayout {
 				textField.setRequired(customUrl.booleanValue());
 			}
 		});
+
 		final CheckBox protectedUrl = (CheckBox)urlForm.getField(
 			"protectedUrl");
 
 		final PasswordField passwordField = (PasswordField)urlForm.getField(
 			"password");
+
+		final PasswordField reEnterPasswordField =
+			(PasswordField)urlForm.getField("reEnterPassword");
 
 		protectedUrl.addListener(new ValueChangeListener() {
 			@Override
@@ -82,11 +89,10 @@ public class UrlFormLayout extends VerticalLayout {
 
 				passwordField.setEnabled(protectedUrl.booleanValue());
 				passwordField.setRequired(protectedUrl.booleanValue());
+				reEnterPasswordField.setEnabled(protectedUrl.booleanValue());
+				reEnterPasswordField.setRequired(protectedUrl.booleanValue());
 			}
 		});
-//		cancelButton.setStyleName(BaseTheme.BUTTON_LINK);
-
-		buttons.addStyleName("right-aligned-buttons");
 
 		NativeButton shrinkButton = new NativeButton(
 			Messages.getString("shrink"),
@@ -103,10 +109,15 @@ public class UrlFormLayout extends VerticalLayout {
 			}
 		);
 
-		buttons.addComponent(shrinkButton);
+		int width = (shrinkButton.getCaption().length() * 3) / 2;
 
+		shrinkButton.setWidth(width, Sizeable.UNITS_EM);
+		shrinkButton.addStyleName("shrink-button");
+
+		_formLayout.addComponent(shrinkButton, 5, 0);
+
+		urlForm.getFooter().addStyleName("right-aligned-buttons");
 		urlForm.getFooter().setMargin(true);
-		urlForm.getFooter().addComponent(buttons);
 
 	}
 
@@ -169,6 +180,7 @@ public class UrlFormLayout extends VerticalLayout {
 
 	}
 
+	private GridLayout _formLayout;
 	private long _companyId;
 	private long _groupId;
 	private Url _url;

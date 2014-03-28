@@ -25,6 +25,9 @@ public class UrlFieldFactory extends DefaultFieldFactory {
 		if (propertyId.equals("password")) {
 			field = new PasswordField(Messages.getString("password"));
 		}
+		else if (propertyId.equals("reEnterPassword")) {
+			field = new PasswordField(Messages.getString("reenter-password"));
+		}
 		else if (propertyId.equals("privateUrl")) {
 			field = new CheckBox(Messages.getString("private-url"));
 		}
@@ -55,6 +58,7 @@ public class UrlFieldFactory extends DefaultFieldFactory {
 			customUrlField.setImmediate(true);
 			customUrlField.addValidator(new CustomRequiredFieldValidator(
 				"custom validator errors"));
+			customUrlField.setWidth(100, Sizeable.UNITS_PERCENTAGE);
 		}
 		else if (propertyId.equals("originalUrl")) {
 			TextField urlField = (TextField)field;
@@ -63,7 +67,7 @@ public class UrlFieldFactory extends DefaultFieldFactory {
 			urlField.setImmediate(true);
 			urlField.setRequired(true);
 			urlField.setRequiredError(Messages.getString("url-required-error"));
-			urlField.setWidth(95, Sizeable.UNITS_PERCENTAGE);
+			urlField.setWidth(100, Sizeable.UNITS_PERCENTAGE);
 			urlField.addValidator(
 				new UrlValidator(
 					Messages.getString("url-validator-error-message")));
@@ -71,6 +75,14 @@ public class UrlFieldFactory extends DefaultFieldFactory {
 		else if (propertyId.equals("password")) {
 			PasswordField passwordField = (PasswordField)field;
 			passwordField.setCaption("password");
+			passwordField.setEnabled(false);
+			passwordField.setImmediate(true);
+			passwordField.addValidator(
+				new CustomRequiredFieldValidator("custom validator errors"));
+		}
+		else if (propertyId.equals("reEnterPassword")) {
+			PasswordField passwordField = (PasswordField)field;
+			passwordField.setCaption("reenter-password");
 			passwordField.setEnabled(false);
 			passwordField.setImmediate(true);
 			passwordField.addValidator(

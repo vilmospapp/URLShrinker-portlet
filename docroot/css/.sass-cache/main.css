@@ -1,10 +1,11 @@
-.v-horizontallayout-right-aligned-buttons {
-  float: right; }
+.v-nativebutton-shrink-button {
+  margin-top: 10px !important; }
 
 .v-textfield-url-field {
   background-color: white;
   background-image: url(../images/url.png) !important;
   background-position: 4px 3px !important;
   background-repeat: no-repeat !important;
-  padding-left: 24px !important; }
+  padding-left: 24px !important;
+  clear: both !important; }
 

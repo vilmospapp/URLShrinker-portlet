@@ -333,6 +333,14 @@ public class UrlModelImpl extends BaseModelImpl<Url> implements UrlModel {
 		return GetterUtil.getString(_originalUuid);
 	}
 
+	public String getReEnterPassword() {
+		return _reEnterPassword;
+	}
+
+	public void setReEnterPassword(String reEnterPassword) {
+		_reEnterPassword = reEnterPassword;
+	}
+
 	@JSON
 	public long getUrlId() {
 		return _urlId;
@@ -950,6 +958,7 @@ public class UrlModelImpl extends BaseModelImpl<Url> implements UrlModel {
 	private boolean _originalProtectedUrl;
 	private boolean _setOriginalProtectedUrl;
 	private String _password;
+	private String _reEnterPassword = StringPool.BLANK;
 	private Date _createdDate;
 	private Date _modifiedDate;
 	private boolean _archived;

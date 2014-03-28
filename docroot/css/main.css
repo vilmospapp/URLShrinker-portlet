@@ -1,5 +1,5 @@
-.v-horizontallayout-right-aligned-buttons {
-	float: right;
+.v-nativebutton-shrink-button {
+	margin-top: 10px !important;
 }
 
 .v-textfield-url-field {
@@ -8,4 +8,5 @@
 	background-position: 4px 3px !important;
 	background-repeat: no-repeat !important;
 	padding-left: 24px !important;
+	clear: both !important;
 }

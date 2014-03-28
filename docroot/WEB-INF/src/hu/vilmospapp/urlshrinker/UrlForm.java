@@ -35,6 +35,9 @@ public class UrlForm extends Form {
 		else if (propertyId.equals("password")) { //$NON-NLS-1$
 			_mainLayout.addComponent(field, 1, 2);
 		}
+		else if (propertyId.equals("reEnterPassword")) { //$NON-NLS-1$
+			_mainLayout.addComponent(field, 2, 2);
+		}
 		else if (propertyId.equals("protectedUrl")) { //$NON-NLS-1$
 			_mainLayout.addComponent(field, 0, 2);
 		}
@@ -48,7 +51,7 @@ public class UrlForm extends Form {
 			_mainLayout.addComponent(field, 0, 5);
 		}
 		else if (propertyId.equals("hash")) { //$NON-NLS-1$
-			_mainLayout.addComponent(field, 1, 5);
+			_mainLayout.addComponent(field, 1, 5, 4, 5);
 		}
 	}
 
