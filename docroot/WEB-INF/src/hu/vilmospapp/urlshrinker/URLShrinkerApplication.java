@@ -1,51 +1,32 @@
 package hu.vilmospapp.urlshrinker;
 
-import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.vaadin.Application;
-import com.vaadin.data.util.PropertysetItem;
-import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.service.ApplicationContext.TransactionListener;
 import com.vaadin.terminal.gwt.server.PortletApplicationContext2;
-import com.vaadin.terminal.gwt.server.PortletRequestListener;
 import com.vaadin.terminal.gwt.server.PortletApplicationContext2.PortletListener;
-import com.vaadin.ui.CheckBox;
-import com.vaadin.ui.Form;
-import com.vaadin.ui.FormLayout;
-import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.NativeButton;
-import com.vaadin.ui.Panel;
-import com.vaadin.ui.PasswordField;
-import com.vaadin.ui.TextField;
+import com.vaadin.terminal.gwt.server.PortletRequestListener;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Window.Notification;
 import com.vaadin.ui.themes.Reindeer;
 
-import java.util.Date;
+import java.util.Locale;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
-import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-
-import hu.vilmospapp.urlshrinker.model.Url;
-import hu.vilmospapp.urlshrinker.service.UrlLocalServiceUtil;
-import hu.vilmospapp.urlshrinker.util.UrlShrinkerUtil;
 
 @SuppressWarnings("serial")
 public class URLShrinkerApplication extends Application implements
@@ -85,7 +66,7 @@ public class URLShrinkerApplication extends Application implements
 				(PortletApplicationContext2) getContext();
 			ctx.addPortletListener(this, this);
 			ctx.addTransactionListener(this);
-//			_urlFormLayout.setPortletConfig(ctx.getPortletConfig());
+			_urlFormLayout = new UrlFormLayout(getLocale());
 		}
 		else {
 			// should not happen with portlet 2.0
@@ -109,21 +90,23 @@ public class URLShrinkerApplication extends Application implements
 
 		try {
 			User user = PortalUtil.getUser(request);
-
 			setUser(user);
-
-			_urlFormLayout.setUser(user);
 
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+			Locale locale = themeDisplay.getLocale();
+
+			if (_urlFormLayout == null) {
+				_urlFormLayout = new UrlFormLayout(locale);
+			}
+
+			_urlFormLayout.setLocale(locale);
+
+			_urlFormLayout.setUser(user);
+
 			_urlFormLayout.setCompanyId(themeDisplay.getCompanyId());
 			_urlFormLayout.setGroupId(themeDisplay.getScopeGroupId());
-
-//			if (!getLocale().equals(themeDisplay.getLocale())) {
-//				setLocale(themeDisplay.getLocale());
-//				updateLocalization();
-//			}
 		}
 		catch (PortalException e) {
 			e.printStackTrace();
@@ -163,6 +146,6 @@ public class URLShrinkerApplication extends Application implements
 	private static ThreadLocal<URLShrinkerApplication> _application =
 			new ThreadLocal<URLShrinkerApplication>();
 
-	private UrlFormLayout _urlFormLayout = new UrlFormLayout();
+	private UrlFormLayout _urlFormLayout;
 
 }

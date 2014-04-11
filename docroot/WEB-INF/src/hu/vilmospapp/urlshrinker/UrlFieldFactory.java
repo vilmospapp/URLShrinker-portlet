@@ -1,12 +1,7 @@
-package hu.vilmospapp.urlshrinker;
+	package hu.vilmospapp.urlshrinker;
 
 import com.vaadin.data.Item;
-import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.terminal.Sizeable;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.DefaultFieldFactory;
@@ -22,26 +17,44 @@ public class UrlFieldFactory extends DefaultFieldFactory {
 
 		Field field;
 
+		String languageKey = (String)propertyId;
+
 		if (propertyId.equals("password")) {
 			field = new PasswordField(Messages.getString("password"));
 		}
 		else if (propertyId.equals("reEnterPassword")) {
+			languageKey = "reenter-password";
+
 			field = new PasswordField(Messages.getString("reenter-password"));
 		}
 		else if (propertyId.equals("privateUrl")) {
+			languageKey = "private-url";
+
 			field = new CheckBox(Messages.getString("private-url"));
 		}
 		else if (propertyId.equals("protectedUrl")) {
+			languageKey = "protected-url";
+
 			field = new CheckBox(Messages.getString("protected-url"));
 		}
 		else if (propertyId.equals("qrcode")) {
 			field = new CheckBox(Messages.getString("qrcode"));
 		}
 		else if (propertyId.equals("customUrl")) {
+			languageKey = "custom-url";
+
 			field = new CheckBox(Messages.getString("custom-url"));
 		}
 		else if (propertyId.equals("statistics")) {
 			field = new CheckBox(Messages.getString("statistics"));
+		}
+		else if (propertyId.equals("hash")) {
+			field = new TextField(Messages.getString("hash"));
+		}
+		else if (propertyId.equals("originalUrl")) {
+			languageKey = "url";
+
+			field = new TextField(Messages.getString("url"));
 		}
 		else {
 			field = super.createField(item, propertyId, uiContext);
@@ -57,7 +70,7 @@ public class UrlFieldFactory extends DefaultFieldFactory {
 			customUrlField.setEnabled(false);
 			customUrlField.setImmediate(true);
 			customUrlField.addValidator(new CustomRequiredFieldValidator(
-				"custom validator errors"));
+				customUrlField, "custom validator errors"));
 			customUrlField.setWidth(100, Sizeable.UNITS_PERCENTAGE);
 		}
 		else if (propertyId.equals("originalUrl")) {
@@ -69,29 +82,32 @@ public class UrlFieldFactory extends DefaultFieldFactory {
 			urlField.setRequiredError(Messages.getString("url-required-error"));
 			urlField.setWidth(100, Sizeable.UNITS_PERCENTAGE);
 			urlField.addValidator(
-				new UrlValidator(
-					Messages.getString("url-validator-error-message")));
+				new UrlValidator(urlField,"url-validator-error-message"));
 		}
 		else if (propertyId.equals("password")) {
 			PasswordField passwordField = (PasswordField)field;
-			passwordField.setCaption("password");
+			passwordField.setCaption(Messages.getString("password"));
 			passwordField.setEnabled(false);
 			passwordField.setImmediate(true);
 			passwordField.addValidator(
-				new CustomRequiredFieldValidator("custom validator errors"));
+				new CustomRequiredFieldValidator(
+					passwordField, "custom validator errors"));
 		}
 		else if (propertyId.equals("reEnterPassword")) {
-			PasswordField passwordField = (PasswordField)field;
-			passwordField.setCaption("reenter-password");
-			passwordField.setEnabled(false);
-			passwordField.setImmediate(true);
-			passwordField.addValidator(
-				new CustomRequiredFieldValidator("custom validator errors"));
+			PasswordField reEnterPasswordField = (PasswordField)field;
+			reEnterPasswordField.setCaption(Messages.getString("reenter-password"));
+			reEnterPasswordField.setEnabled(false);
+			reEnterPasswordField.setImmediate(true);
+			reEnterPasswordField.addValidator(
+				new CustomRequiredFieldValidator(
+					reEnterPasswordField, "custom validator errors"));
 		}
 		else if (propertyId.equals("protectedUrl")){
 			CheckBox protectedUrl = (CheckBox)field;
 			protectedUrl.setImmediate(true);
 		}
+
+		Messages.registerLocalizedField(field, languageKey);
 
 		return field;
 	}

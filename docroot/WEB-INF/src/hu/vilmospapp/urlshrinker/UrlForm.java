@@ -2,18 +2,25 @@ package hu.vilmospapp.urlshrinker;
 
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.Sizeable;
-import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Form;
 import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.PasswordField;
+import com.vaadin.ui.TextField;
 
 import hu.vilmospapp.urlshrinker.model.Url;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+
 public class UrlForm extends Form {
 
-	public UrlForm(BeanItem<Url> urlItem) {
-		setCaption(Messages.getString("title")); //$NON-NLS-1$
+	public UrlForm(
+		BeanItem<Url> urlItem, Locale locale) {
+
+		setCaption(Messages.getString("title", locale)); //$NON-NLS-1$
 
 		_mainLayout = new GridLayout(6, 6);
 		_mainLayout.setMargin(true, false, false, true);
@@ -55,6 +62,35 @@ public class UrlForm extends Form {
 		}
 	}
 
+//	public void popUnSavedValues() {
+//		Set<Object> propertyIds = _unSavedValues.keySet();
+//
+//		for (Object propertyId : propertyIds.toArray()) {
+//			Field field = getField(propertyId);
+//
+//			Object value =_unSavedValues.get(propertyId);
+//
+//			field.setValue(value);
+//		}
+//
+//		requestRepaint();
+//	}
+
+//	public void pushUnSavedValues() {
+//		_unSavedValues.clear();
+//
+//		Collection<?> propertyIds = getItemPropertyIds();
+//
+//		for (Object itemPropertyId : propertyIds) {
+//			Field field = getField(itemPropertyId);
+//
+//			if (field instanceof TextField) {
+//				_unSavedValues.put(itemPropertyId, field.getValue());
+//			}
+//		}
+//	}
+
 	private GridLayout _mainLayout;
+//	private Map<Object, Object> _unSavedValues = new HashMap<Object, Object>();
 
 }

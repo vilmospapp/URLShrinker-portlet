@@ -7,15 +7,14 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.terminal.Sizeable;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
-import com.vaadin.ui.Form;
 import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.NativeButton;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
@@ -28,23 +27,25 @@ import hu.vilmospapp.urlshrinker.util.UrlShrinkerUtil;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Locale;
 
 public class UrlFormLayout extends VerticalLayout {
 
-	public UrlFormLayout() {
+	public UrlFormLayout(Locale locale) {
 		_url = new UrlImpl();
+
+		_locale = locale;
 
 		BeanItem<Url> urlItem = new BeanItem<Url>(_url);
 
-		final Form urlForm = new UrlForm(urlItem);
+		final UrlForm urlForm = new UrlForm(urlItem, locale);
 
 		_formLayout = (GridLayout)urlForm.getLayout();
 
 		urlForm.setWidth(100, Sizeable.UNITS_PERCENTAGE);
-
 		addComponent(urlForm);
 
-		urlForm.setWriteThrough(false); // we want explicit 'apply'
+		urlForm.setWriteThrough(true); // we want explicit 'apply'
 		urlForm.setInvalidCommitted(false); // no invalid values in datamodel
 
 		// FieldFactory for customizing the fields and adding validators
@@ -79,8 +80,19 @@ public class UrlFormLayout extends VerticalLayout {
 		final PasswordField passwordField = (PasswordField)urlForm.getField(
 			"password");
 
-		final PasswordField reEnterPasswordField =
-			(PasswordField)urlForm.getField("reEnterPassword");
+		ObjectProperty<String> property = new ObjectProperty<String>(
+			"reEnterPassword");
+
+		final PasswordField reEnterPasswordField = new PasswordField(
+			"reenter-password");
+
+		Messages.registerLocalizedField(
+			reEnterPasswordField, "reenter-password");
+
+		reEnterPasswordField.setPropertyDataSource(property);
+		reEnterPasswordField.setEnabled(false);
+
+		_formLayout.addComponent(reEnterPasswordField, 2, 2);
 
 		protectedUrl.addListener(new ValueChangeListener() {
 			@Override
@@ -89,18 +101,22 @@ public class UrlFormLayout extends VerticalLayout {
 
 				passwordField.setEnabled(protectedUrl.booleanValue());
 				passwordField.setRequired(protectedUrl.booleanValue());
+
 				reEnterPasswordField.setEnabled(protectedUrl.booleanValue());
 				reEnterPasswordField.setRequired(protectedUrl.booleanValue());
 			}
 		});
 
 		NativeButton shrinkButton = new NativeButton(
-			Messages.getString("shrink"),
+			Messages.getString("shrink", _locale),
 			new Button.ClickListener() {
 				public void buttonClick(ClickEvent event) {
 					try {
 						urlForm.commit();
-						addUrl();
+
+						if (urlForm.isValid()) {
+							addUrl();
+						}
 					} 
 					catch (Exception e) {
 					// Ingnored, we'll let the Form handle the errors
@@ -108,6 +124,8 @@ public class UrlFormLayout extends VerticalLayout {
 				}
 			}
 		);
+
+		Messages.registerLocalizedField(shrinkButton, "shrink");
 
 		int width = (shrinkButton.getCaption().length() * 3) / 2;
 
@@ -118,7 +136,6 @@ public class UrlFormLayout extends VerticalLayout {
 
 		urlForm.getFooter().addStyleName("right-aligned-buttons");
 		urlForm.getFooter().setMargin(true);
-
 	}
 
 	public void setCompanyId(long companyId) {
@@ -133,11 +150,27 @@ public class UrlFormLayout extends VerticalLayout {
 		_user = user;
 	}
 
+	public void setLocale(Locale locale) {
+		if (!_locale.equals(locale)) {
+			_locale = locale;
+
+			Messages.setLocale(locale);
+			Messages.refreshFieldLocalizations();
+
+			try {
+				((UrlForm)_formLayout.getParent()).validate();
+			}
+			catch (InvalidValueException ive) {
+				
+			}
+		}
+	}
+
 	protected void addUrl()
 		throws SystemException, PortalException {
 
 		long urlId = CounterLocalServiceUtil.increment(Url.class.getName());
-
+System.out.println("add url....");
 		Date now = new Date();
 		// Url url = UrlLocalServiceUtil.getUrl(urlText);
 		Url url = UrlLocalServiceUtil.createUrl(urlId);
@@ -183,6 +216,7 @@ public class UrlFormLayout extends VerticalLayout {
 	private GridLayout _formLayout;
 	private long _companyId;
 	private long _groupId;
+	private Locale _locale;
 	private Url _url;
 	private User _user;
 

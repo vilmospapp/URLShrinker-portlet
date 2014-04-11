@@ -1,10 +1,11 @@
 package hu.vilmospapp.urlshrinker;
 
 import com.vaadin.data.Validator;
+import com.vaadin.ui.Field;
 
 public class CustomRequiredFieldValidator implements Validator {
 
-	public CustomRequiredFieldValidator(String errorMessage) {
+	public CustomRequiredFieldValidator(Field field, String errorMessage) {
 
 	}
 
