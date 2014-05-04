@@ -3,7 +3,7 @@ package hu.vilmospapp.urlshrinker.form;
 import com.vaadin.data.Validator;
 import com.vaadin.ui.Field;
 
-import i18n.Messages;
+import hu.vilmospapp.urlshrinker.i18n.Messages;
 
 
 public class UrlValidator implements Validator {

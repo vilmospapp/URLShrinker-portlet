@@ -36,11 +36,11 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window.Notification;
 
+import hu.vilmospapp.urlshrinker.i18n.Messages;
 import hu.vilmospapp.urlshrinker.model.Url;
 import hu.vilmospapp.urlshrinker.model.impl.UrlImpl;
 import hu.vilmospapp.urlshrinker.service.UrlLocalServiceUtil;
 import hu.vilmospapp.urlshrinker.util.UrlShrinkerUtil;
-import i18n.Messages;
 
 import java.io.IOException;
 import java.io.InputStream;

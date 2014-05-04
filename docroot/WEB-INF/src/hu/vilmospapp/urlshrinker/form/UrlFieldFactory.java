@@ -10,9 +10,8 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 
-import i18n.Messages;
 
-import hu.vilmospapp.urlshrinker.CustomRequiredFieldValidator;
+import hu.vilmospapp.urlshrinker.i18n.Messages;
 
 public class UrlFieldFactory extends DefaultFieldFactory {
 

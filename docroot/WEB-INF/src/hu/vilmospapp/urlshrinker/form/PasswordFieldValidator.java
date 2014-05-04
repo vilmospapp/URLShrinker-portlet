@@ -4,7 +4,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.vaadin.data.Validator;
 import com.vaadin.ui.Field;
 
-import i18n.Messages;
+import hu.vilmospapp.urlshrinker.i18n.Messages;
 
 
 public class PasswordFieldValidator implements Validator {

@@ -7,8 +7,8 @@ import com.vaadin.ui.Form;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.PasswordField;
 
+import hu.vilmospapp.urlshrinker.i18n.Messages;
 import hu.vilmospapp.urlshrinker.model.Url;
-import i18n.Messages;
 
 import java.util.Locale;
 
