@@ -278,6 +278,16 @@ public class UrlLocalServiceWrapper implements UrlLocalService,
 		return _urlLocalService.invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public java.util.List<hu.vilmospapp.urlshrinker.model.Url> getExpiredUrls(
+		long companyId, java.util.Date expirationDate) {
+		return _urlLocalService.getExpiredUrls(companyId, expirationDate);
+	}
+
+	public boolean isHashUnique(long companyId, long groupId,
+		java.lang.String hash) {
+		return _urlLocalService.isHashUnique(companyId, groupId, hash);
+	}
+
 	/**
 	 * @deprecated Renamed to {@link #getWrappedService}
 	 */

@@ -84,6 +84,11 @@ public class UrlClp extends BaseModelImpl<Url> implements Url {
 		attributes.put("customUrl", getCustomUrl());
 		attributes.put("qrcode", getQrcode());
 		attributes.put("statistics", getStatistics());
+		attributes.put("favicon", getFavicon());
+		attributes.put("preview", getPreview());
+		attributes.put("status", getStatus());
+		attributes.put("expirationDate", getExpirationDate());
+		attributes.put("oneTimeUrl", getOneTimeUrl());
 
 		return attributes;
 	}
@@ -184,6 +189,36 @@ public class UrlClp extends BaseModelImpl<Url> implements Url {
 
 		if (statistics != null) {
 			setStatistics(statistics);
+		}
+
+		String favicon = (String)attributes.get("favicon");
+
+		if (favicon != null) {
+			setFavicon(favicon);
+		}
+
+		String preview = (String)attributes.get("preview");
+
+		if (preview != null) {
+			setPreview(preview);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
+		}
+
+		Date expirationDate = (Date)attributes.get("expirationDate");
+
+		if (expirationDate != null) {
+			setExpirationDate(expirationDate);
+		}
+
+		Boolean oneTimeUrl = (Boolean)attributes.get("oneTimeUrl");
+
+		if (oneTimeUrl != null) {
+			setOneTimeUrl(oneTimeUrl);
 		}
 	}
 
@@ -555,6 +590,115 @@ public class UrlClp extends BaseModelImpl<Url> implements Url {
 		}
 	}
 
+	public String getFavicon() {
+		return _favicon;
+	}
+
+	public void setFavicon(String favicon) {
+		_favicon = favicon;
+
+		if (_urlRemoteModel != null) {
+			try {
+				Class<?> clazz = _urlRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setFavicon", String.class);
+
+				method.invoke(_urlRemoteModel, favicon);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	public String getPreview() {
+		return _preview;
+	}
+
+	public void setPreview(String preview) {
+		_preview = preview;
+
+		if (_urlRemoteModel != null) {
+			try {
+				Class<?> clazz = _urlRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setPreview", String.class);
+
+				method.invoke(_urlRemoteModel, preview);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	public int getStatus() {
+		return _status;
+	}
+
+	public void setStatus(int status) {
+		_status = status;
+
+		if (_urlRemoteModel != null) {
+			try {
+				Class<?> clazz = _urlRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setStatus", int.class);
+
+				method.invoke(_urlRemoteModel, status);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	public Date getExpirationDate() {
+		return _expirationDate;
+	}
+
+	public void setExpirationDate(Date expirationDate) {
+		_expirationDate = expirationDate;
+
+		if (_urlRemoteModel != null) {
+			try {
+				Class<?> clazz = _urlRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setExpirationDate", Date.class);
+
+				method.invoke(_urlRemoteModel, expirationDate);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	public boolean getOneTimeUrl() {
+		return _oneTimeUrl;
+	}
+
+	public boolean isOneTimeUrl() {
+		return _oneTimeUrl;
+	}
+
+	public void setOneTimeUrl(boolean oneTimeUrl) {
+		_oneTimeUrl = oneTimeUrl;
+
+		if (_urlRemoteModel != null) {
+			try {
+				Class<?> clazz = _urlRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setOneTimeUrl", boolean.class);
+
+				method.invoke(_urlRemoteModel, oneTimeUrl);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
 	public BaseModel<?> getUrlRemoteModel() {
 		return _urlRemoteModel;
 	}
@@ -643,6 +787,11 @@ public class UrlClp extends BaseModelImpl<Url> implements Url {
 		clone.setCustomUrl(getCustomUrl());
 		clone.setQrcode(getQrcode());
 		clone.setStatistics(getStatistics());
+		clone.setFavicon(getFavicon());
+		clone.setPreview(getPreview());
+		clone.setStatus(getStatus());
+		clone.setExpirationDate(getExpirationDate());
+		clone.setOneTimeUrl(getOneTimeUrl());
 
 		return clone;
 	}
@@ -690,7 +839,7 @@ public class UrlClp extends BaseModelImpl<Url> implements Url {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -724,13 +873,23 @@ public class UrlClp extends BaseModelImpl<Url> implements Url {
 		sb.append(getQrcode());
 		sb.append(", statistics=");
 		sb.append(getStatistics());
+		sb.append(", favicon=");
+		sb.append(getFavicon());
+		sb.append(", preview=");
+		sb.append(getPreview());
+		sb.append(", status=");
+		sb.append(getStatus());
+		sb.append(", expirationDate=");
+		sb.append(getExpirationDate());
+		sb.append(", oneTimeUrl=");
+		sb.append(getOneTimeUrl());
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(52);
+		StringBundler sb = new StringBundler(67);
 
 		sb.append("<model><model-name>");
 		sb.append("hu.vilmospapp.urlshrinker.model.Url");
@@ -800,6 +959,26 @@ public class UrlClp extends BaseModelImpl<Url> implements Url {
 			"<column><column-name>statistics</column-name><column-value><![CDATA[");
 		sb.append(getStatistics());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>favicon</column-name><column-value><![CDATA[");
+		sb.append(getFavicon());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>preview</column-name><column-value><![CDATA[");
+		sb.append(getPreview());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>status</column-name><column-value><![CDATA[");
+		sb.append(getStatus());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>expirationDate</column-name><column-value><![CDATA[");
+		sb.append(getExpirationDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>oneTimeUrl</column-name><column-value><![CDATA[");
+		sb.append(getOneTimeUrl());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -823,5 +1002,10 @@ public class UrlClp extends BaseModelImpl<Url> implements Url {
 	private boolean _customUrl;
 	private boolean _qrcode;
 	private boolean _statistics;
+	private String _favicon;
+	private String _preview;
+	private int _status;
+	private Date _expirationDate;
+	private boolean _oneTimeUrl;
 	private BaseModel<?> _urlRemoteModel;
 }

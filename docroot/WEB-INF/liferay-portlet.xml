@@ -5,6 +5,15 @@
 	<portlet>
 		<portlet-name>URLShrinker</portlet-name>
 		<icon>/icon.png</icon>
+		<scheduler-entry>
+			<scheduler-event-listener-class>hu.vlmospapp.urshrinker.scheduler.CheckExpiredURLMessageListener</scheduler-event-listener-class>
+			<trigger>
+				<simple>
+					<property-key>blogs.entry.check.interval</property-key>
+					<time-unit>minute</time-unit>
+				</simple>
+			</trigger>
+		</scheduler-entry>
 		<instanceable>false</instanceable>
 		<ajaxable>false</ajaxable>
 		<header-portlet-css>/css/main.css</header-portlet-css>

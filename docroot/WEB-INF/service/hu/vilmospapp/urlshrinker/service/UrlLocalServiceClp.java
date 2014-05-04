@@ -115,6 +115,16 @@ public class UrlLocalServiceClp implements UrlLocalService {
 		_methodName18 = "setBeanIdentifier";
 
 		_methodParameterTypes18 = new String[] { "java.lang.String" };
+
+		_methodName20 = "getExpiredUrls";
+
+		_methodParameterTypes20 = new String[] { "long", "java.util.Date" };
+
+		_methodName21 = "isHashUnique";
+
+		_methodParameterTypes21 = new String[] {
+				"long", "long", "java.lang.String"
+			};
 	}
 
 	public hu.vilmospapp.urlshrinker.model.Url addUrl(
@@ -673,6 +683,64 @@ public class UrlLocalServiceClp implements UrlLocalService {
 		throw new UnsupportedOperationException();
 	}
 
+	public java.util.List<hu.vilmospapp.urlshrinker.model.Url> getExpiredUrls(
+		long companyId, java.util.Date expirationDate) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName20,
+					_methodParameterTypes20,
+					new Object[] {
+						companyId,
+						
+					ClpSerializer.translateInput(expirationDate)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<hu.vilmospapp.urlshrinker.model.Url>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	public boolean isHashUnique(long companyId, long groupId,
+		java.lang.String hash) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName21,
+					_methodParameterTypes21,
+					new Object[] {
+						companyId,
+						
+					groupId,
+						
+					ClpSerializer.translateInput(hash)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Boolean)returnObj).booleanValue();
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -712,4 +780,8 @@ public class UrlLocalServiceClp implements UrlLocalService {
 	private String[] _methodParameterTypes17;
 	private String _methodName18;
 	private String[] _methodParameterTypes18;
+	private String _methodName20;
+	private String[] _methodParameterTypes20;
+	private String _methodName21;
+	private String[] _methodParameterTypes21;
 }

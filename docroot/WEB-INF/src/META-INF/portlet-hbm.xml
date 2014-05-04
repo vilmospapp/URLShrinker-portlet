@@ -3,7 +3,7 @@
 
 <hibernate-mapping default-lazy="false" auto-import="false">
 	<import class="hu.vilmospapp.urlshrinker.model.Url" />
-	<class name="hu.vilmospapp.urlshrinker.model.impl.UrlImpl" table="Url">
+	<class name="hu.vilmospapp.urlshrinker.model.impl.UrlImpl" table="UrlShrinker_Url">
 		<cache usage="read-write" />
 		<id name="urlId" type="long">
 			<generator class="assigned" />
@@ -23,5 +23,10 @@
 		<property name="customUrl" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="qrcode" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="statistics" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="favicon" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="preview" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="expirationDate" type="org.hibernate.type.TimestampType" />
+		<property name="oneTimeUrl" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 </hibernate-mapping>

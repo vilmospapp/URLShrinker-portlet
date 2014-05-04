@@ -34,7 +34,7 @@ import java.util.Date;
 public class UrlCacheModel implements CacheModel<Url>, Serializable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -68,6 +68,16 @@ public class UrlCacheModel implements CacheModel<Url>, Serializable {
 		sb.append(qrcode);
 		sb.append(", statistics=");
 		sb.append(statistics);
+		sb.append(", favicon=");
+		sb.append(favicon);
+		sb.append(", preview=");
+		sb.append(preview);
+		sb.append(", status=");
+		sb.append(status);
+		sb.append(", expirationDate=");
+		sb.append(expirationDate);
+		sb.append(", oneTimeUrl=");
+		sb.append(oneTimeUrl);
 		sb.append("}");
 
 		return sb.toString();
@@ -131,6 +141,31 @@ public class UrlCacheModel implements CacheModel<Url>, Serializable {
 		urlImpl.setQrcode(qrcode);
 		urlImpl.setStatistics(statistics);
 
+		if (favicon == null) {
+			urlImpl.setFavicon(StringPool.BLANK);
+		}
+		else {
+			urlImpl.setFavicon(favicon);
+		}
+
+		if (preview == null) {
+			urlImpl.setPreview(StringPool.BLANK);
+		}
+		else {
+			urlImpl.setPreview(preview);
+		}
+
+		urlImpl.setStatus(status);
+
+		if (expirationDate == Long.MIN_VALUE) {
+			urlImpl.setExpirationDate(null);
+		}
+		else {
+			urlImpl.setExpirationDate(new Date(expirationDate));
+		}
+
+		urlImpl.setOneTimeUrl(oneTimeUrl);
+
 		urlImpl.resetOriginalValues();
 
 		return urlImpl;
@@ -152,4 +187,9 @@ public class UrlCacheModel implements CacheModel<Url>, Serializable {
 	public boolean customUrl;
 	public boolean qrcode;
 	public boolean statistics;
+	public String favicon;
+	public String preview;
+	public int status;
+	public long expirationDate;
+	public boolean oneTimeUrl;
 }

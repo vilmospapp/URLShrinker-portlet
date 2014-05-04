@@ -14,7 +14,16 @@
 
 package hu.vilmospapp.urlshrinker.service.impl;
 
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.Time;
+
+import hu.vilmospapp.urlshrinker.model.Url;
 import hu.vilmospapp.urlshrinker.service.base.UrlLocalServiceBaseImpl;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * The implementation of the url local service.
@@ -36,4 +45,29 @@ public class UrlLocalServiceImpl extends UrlLocalServiceBaseImpl {
 	 *
 	 * Never reference this interface directly. Always use {@link hu.vilmospapp.urlshrinker.service.UrlLocalServiceUtil} to access the url local service.
 	 */
+	public List<Url> getExpiredUrls(long companyId, Date expirationDate) {
+		List<Url> expiredUrls = null;
+		try {
+			expiredUrls = urlPersistence.findByExpirationDate(
+				companyId, expirationDate);
+		}
+		catch (SystemException e) {
+		}
+
+		return expiredUrls;
+	}
+
+	public boolean isHashUnique(long companyId, long groupId, String hash) {
+		try {
+			urlPersistence.findByC_G_H(companyId, groupId, hash);
+			return true;
+		}
+		catch (SystemException se) {
+		}
+
+		return false;
+	}
+
+	private static final long _URL_CHECK_INTERVAL =
+			GetterUtil.getLong(PropsUtil.get("url.check.interval")) * Time.MINUTE;
 }

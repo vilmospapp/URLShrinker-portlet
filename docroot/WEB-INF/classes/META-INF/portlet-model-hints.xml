@@ -18,5 +18,10 @@
 		<field name="customUrl" type="boolean" />
 		<field name="qrcode" type="boolean" />
 		<field name="statistics" type="boolean" />
+		<field name="favicon" type="String" />
+		<field name="preview" type="String" />
+		<field name="status" type="int" />
+		<field name="expirationDate" type="Date" />
+		<field name="oneTimeUrl" type="boolean" />
 	</model>
 </model-hints>

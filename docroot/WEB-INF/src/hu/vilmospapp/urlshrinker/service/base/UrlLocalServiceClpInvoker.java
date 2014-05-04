@@ -115,6 +115,16 @@ public class UrlLocalServiceClpInvoker {
 		_methodName40 = "setBeanIdentifier";
 
 		_methodParameterTypes40 = new String[] { "java.lang.String" };
+
+		_methodName45 = "getExpiredUrls";
+
+		_methodParameterTypes45 = new String[] { "long", "java.util.Date" };
+
+		_methodName46 = "isHashUnique";
+
+		_methodParameterTypes46 = new String[] {
+				"long", "long", "java.lang.String"
+			};
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -224,6 +234,18 @@ public class UrlLocalServiceClpInvoker {
 			return null;
 		}
 
+		if (_methodName45.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes45, parameterTypes)) {
+			return UrlLocalServiceUtil.getExpiredUrls(((Long)arguments[0]).longValue(),
+				(java.util.Date)arguments[1]);
+		}
+
+		if (_methodName46.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes46, parameterTypes)) {
+			return UrlLocalServiceUtil.isHashUnique(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue(), (java.lang.String)arguments[2]);
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -265,4 +287,8 @@ public class UrlLocalServiceClpInvoker {
 	private String[] _methodParameterTypes39;
 	private String _methodName40;
 	private String[] _methodParameterTypes40;
+	private String _methodName45;
+	private String[] _methodParameterTypes45;
+	private String _methodName46;
+	private String[] _methodParameterTypes46;
 }

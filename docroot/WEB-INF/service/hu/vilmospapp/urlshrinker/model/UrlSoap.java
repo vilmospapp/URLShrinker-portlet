@@ -47,6 +47,11 @@ public class UrlSoap implements Serializable {
 		soapModel.setCustomUrl(model.getCustomUrl());
 		soapModel.setQrcode(model.getQrcode());
 		soapModel.setStatistics(model.getStatistics());
+		soapModel.setFavicon(model.getFavicon());
+		soapModel.setPreview(model.getPreview());
+		soapModel.setStatus(model.getStatus());
+		soapModel.setExpirationDate(model.getExpirationDate());
+		soapModel.setOneTimeUrl(model.getOneTimeUrl());
 
 		return soapModel;
 	}
@@ -251,6 +256,50 @@ public class UrlSoap implements Serializable {
 		_statistics = statistics;
 	}
 
+	public String getFavicon() {
+		return _favicon;
+	}
+
+	public void setFavicon(String favicon) {
+		_favicon = favicon;
+	}
+
+	public String getPreview() {
+		return _preview;
+	}
+
+	public void setPreview(String preview) {
+		_preview = preview;
+	}
+
+	public int getStatus() {
+		return _status;
+	}
+
+	public void setStatus(int status) {
+		_status = status;
+	}
+
+	public Date getExpirationDate() {
+		return _expirationDate;
+	}
+
+	public void setExpirationDate(Date expirationDate) {
+		_expirationDate = expirationDate;
+	}
+
+	public boolean getOneTimeUrl() {
+		return _oneTimeUrl;
+	}
+
+	public boolean isOneTimeUrl() {
+		return _oneTimeUrl;
+	}
+
+	public void setOneTimeUrl(boolean oneTimeUrl) {
+		_oneTimeUrl = oneTimeUrl;
+	}
+
 	private String _uuid;
 	private long _urlId;
 	private long _userId;
@@ -267,4 +316,9 @@ public class UrlSoap implements Serializable {
 	private boolean _customUrl;
 	private boolean _qrcode;
 	private boolean _statistics;
+	private String _favicon;
+	private String _preview;
+	private int _status;
+	private Date _expirationDate;
+	private boolean _oneTimeUrl;
 }

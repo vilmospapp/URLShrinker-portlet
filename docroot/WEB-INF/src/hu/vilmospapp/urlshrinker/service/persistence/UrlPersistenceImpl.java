@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -53,6 +54,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -107,6 +109,21 @@ public class UrlPersistenceImpl extends BasePersistenceImpl<Url>
 			UrlModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
 			new String[] { String.class.getName(), Long.class.getName() });
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_EXPIRATIONDATE =
+		new FinderPath(UrlModelImpl.ENTITY_CACHE_ENABLED,
+			UrlModelImpl.FINDER_CACHE_ENABLED, UrlImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByExpirationDate",
+			new String[] {
+				Long.class.getName(), Date.class.getName(),
+				
+			"java.lang.Integer", "java.lang.Integer",
+				"com.liferay.portal.kernel.util.OrderByComparator"
+			});
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_EXPIRATIONDATE =
+		new FinderPath(UrlModelImpl.ENTITY_CACHE_ENABLED,
+			UrlModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByExpirationDate",
+			new String[] { Long.class.getName(), Date.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_G_U = new FinderPath(UrlModelImpl.ENTITY_CACHE_ENABLED,
 			UrlModelImpl.FINDER_CACHE_ENABLED, UrlImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_G_U",
@@ -766,6 +783,11 @@ public class UrlPersistenceImpl extends BasePersistenceImpl<Url>
 		urlImpl.setCustomUrl(url.isCustomUrl());
 		urlImpl.setQrcode(url.isQrcode());
 		urlImpl.setStatistics(url.isStatistics());
+		urlImpl.setFavicon(url.getFavicon());
+		urlImpl.setPreview(url.getPreview());
+		urlImpl.setStatus(url.getStatus());
+		urlImpl.setExpirationDate(url.getExpirationDate());
+		urlImpl.setOneTimeUrl(url.isOneTimeUrl());
 
 		return urlImpl;
 	}
@@ -1413,6 +1435,416 @@ public class UrlPersistenceImpl extends BasePersistenceImpl<Url>
 			else {
 				return (Url)result;
 			}
+		}
+	}
+
+	/**
+	 * Returns all the urls where companyId = &#63; and expirationDate &le; &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param expirationDate the expiration date
+	 * @return the matching urls
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Url> findByExpirationDate(long companyId, Date expirationDate)
+		throws SystemException {
+		return findByExpirationDate(companyId, expirationDate,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the urls where companyId = &#63; and expirationDate &le; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param expirationDate the expiration date
+	 * @param start the lower bound of the range of urls
+	 * @param end the upper bound of the range of urls (not inclusive)
+	 * @return the range of matching urls
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Url> findByExpirationDate(long companyId, Date expirationDate,
+		int start, int end) throws SystemException {
+		return findByExpirationDate(companyId, expirationDate, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the urls where companyId = &#63; and expirationDate &le; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param expirationDate the expiration date
+	 * @param start the lower bound of the range of urls
+	 * @param end the upper bound of the range of urls (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching urls
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Url> findByExpirationDate(long companyId, Date expirationDate,
+		int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_EXPIRATIONDATE;
+		finderArgs = new Object[] {
+				companyId, expirationDate,
+				
+				start, end, orderByComparator
+			};
+
+		List<Url> list = (List<Url>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (Url url : list) {
+				if ((companyId != url.getCompanyId()) ||
+						!Validator.equals(expirationDate,
+							url.getExpirationDate())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_URL_WHERE);
+
+			query.append(_FINDER_COLUMN_EXPIRATIONDATE_COMPANYID_2);
+
+			if (expirationDate == null) {
+				query.append(_FINDER_COLUMN_EXPIRATIONDATE_EXPIRATIONDATE_1);
+			}
+			else {
+				query.append(_FINDER_COLUMN_EXPIRATIONDATE_EXPIRATIONDATE_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				if (expirationDate != null) {
+					qPos.add(CalendarUtil.getTimestamp(expirationDate));
+				}
+
+				list = (List<Url>)QueryUtil.list(q, getDialect(), start, end);
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (list == null) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
+				else {
+					cacheResult(list);
+
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
+
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first url in the ordered set where companyId = &#63; and expirationDate &le; &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param expirationDate the expiration date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching url
+	 * @throws hu.vilmospapp.urlshrinker.NoSuchUrlException if a matching url could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Url findByExpirationDate_First(long companyId, Date expirationDate,
+		OrderByComparator orderByComparator)
+		throws NoSuchUrlException, SystemException {
+		Url url = fetchByExpirationDate_First(companyId, expirationDate,
+				orderByComparator);
+
+		if (url != null) {
+			return url;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", expirationDate=");
+		msg.append(expirationDate);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchUrlException(msg.toString());
+	}
+
+	/**
+	 * Returns the first url in the ordered set where companyId = &#63; and expirationDate &le; &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param expirationDate the expiration date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching url, or <code>null</code> if a matching url could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Url fetchByExpirationDate_First(long companyId, Date expirationDate,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<Url> list = findByExpirationDate(companyId, expirationDate, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last url in the ordered set where companyId = &#63; and expirationDate &le; &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param expirationDate the expiration date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching url
+	 * @throws hu.vilmospapp.urlshrinker.NoSuchUrlException if a matching url could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Url findByExpirationDate_Last(long companyId, Date expirationDate,
+		OrderByComparator orderByComparator)
+		throws NoSuchUrlException, SystemException {
+		Url url = fetchByExpirationDate_Last(companyId, expirationDate,
+				orderByComparator);
+
+		if (url != null) {
+			return url;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", expirationDate=");
+		msg.append(expirationDate);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchUrlException(msg.toString());
+	}
+
+	/**
+	 * Returns the last url in the ordered set where companyId = &#63; and expirationDate &le; &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param expirationDate the expiration date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching url, or <code>null</code> if a matching url could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Url fetchByExpirationDate_Last(long companyId, Date expirationDate,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByExpirationDate(companyId, expirationDate);
+
+		List<Url> list = findByExpirationDate(companyId, expirationDate,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the urls before and after the current url in the ordered set where companyId = &#63; and expirationDate &le; &#63;.
+	 *
+	 * @param urlId the primary key of the current url
+	 * @param companyId the company ID
+	 * @param expirationDate the expiration date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next url
+	 * @throws hu.vilmospapp.urlshrinker.NoSuchUrlException if a url with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Url[] findByExpirationDate_PrevAndNext(long urlId, long companyId,
+		Date expirationDate, OrderByComparator orderByComparator)
+		throws NoSuchUrlException, SystemException {
+		Url url = findByPrimaryKey(urlId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Url[] array = new UrlImpl[3];
+
+			array[0] = getByExpirationDate_PrevAndNext(session, url, companyId,
+					expirationDate, orderByComparator, true);
+
+			array[1] = url;
+
+			array[2] = getByExpirationDate_PrevAndNext(session, url, companyId,
+					expirationDate, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Url getByExpirationDate_PrevAndNext(Session session, Url url,
+		long companyId, Date expirationDate,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_URL_WHERE);
+
+		query.append(_FINDER_COLUMN_EXPIRATIONDATE_COMPANYID_2);
+
+		if (expirationDate == null) {
+			query.append(_FINDER_COLUMN_EXPIRATIONDATE_EXPIRATIONDATE_1);
+		}
+		else {
+			query.append(_FINDER_COLUMN_EXPIRATIONDATE_EXPIRATIONDATE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(companyId);
+
+		if (expirationDate != null) {
+			qPos.add(CalendarUtil.getTimestamp(expirationDate));
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(url);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<Url> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
 		}
 	}
 
@@ -3412,6 +3844,20 @@ public class UrlPersistenceImpl extends BasePersistenceImpl<Url>
 	}
 
 	/**
+	 * Removes all the urls where companyId = &#63; and expirationDate &le; &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param expirationDate the expiration date
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByExpirationDate(long companyId, Date expirationDate)
+		throws SystemException {
+		for (Url url : findByExpirationDate(companyId, expirationDate)) {
+			remove(url);
+		}
+	}
+
+	/**
 	 * Removes the url where companyId = &#63; and groupId = &#63; and userId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -3638,6 +4084,72 @@ public class UrlPersistenceImpl extends BasePersistenceImpl<Url>
 				}
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G,
+					finderArgs, count);
+
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of urls where companyId = &#63; and expirationDate &le; &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param expirationDate the expiration date
+	 * @return the number of matching urls
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByExpirationDate(long companyId, Date expirationDate)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { companyId, expirationDate };
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_EXPIRATIONDATE,
+				finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_URL_WHERE);
+
+			query.append(_FINDER_COLUMN_EXPIRATIONDATE_COMPANYID_2);
+
+			if (expirationDate == null) {
+				query.append(_FINDER_COLUMN_EXPIRATIONDATE_EXPIRATIONDATE_1);
+			}
+			else {
+				query.append(_FINDER_COLUMN_EXPIRATIONDATE_EXPIRATIONDATE_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				if (expirationDate != null) {
+					qPos.add(CalendarUtil.getTimestamp(expirationDate));
+				}
+
+				count = (Long)q.uniqueResult();
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (count == null) {
+					count = Long.valueOf(0);
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_EXPIRATIONDATE,
 					finderArgs, count);
 
 				closeSession(session);
@@ -4146,6 +4658,9 @@ public class UrlPersistenceImpl extends BasePersistenceImpl<Url>
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "url.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(url.uuid IS NULL OR url.uuid = ?) AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "url.groupId = ?";
+	private static final String _FINDER_COLUMN_EXPIRATIONDATE_COMPANYID_2 = "url.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_EXPIRATIONDATE_EXPIRATIONDATE_1 = "url.expirationDate <= NULL";
+	private static final String _FINDER_COLUMN_EXPIRATIONDATE_EXPIRATIONDATE_2 = "url.expirationDate <= ?";
 	private static final String _FINDER_COLUMN_C_G_U_COMPANYID_2 = "url.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_G_U_GROUPID_2 = "url.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_C_G_U_USERID_2 = "url.userId = ?";

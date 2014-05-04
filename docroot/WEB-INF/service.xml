@@ -1,57 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.1.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_1_0.dtd">
-<service-builder package-path="hu.vilmospapp.urlshrinker" auto-namespace-tables="false" >
+<service-builder package-path="hu.vilmospapp.urlshrinker" auto-namespace-tables="true" >
 	<author>Vilmos Papp</author>
 	<namespace>UrlShrinker</namespace>
 
 	<entity name="Url" local-service="true" remote-service="true" uuid="true">
-		<column name="urlId" type="long" primary="true"></column>
-		<column name="userId" type="long"></column>
-		<column name="companyId" type="long"></column>
-		<column name="groupId" type="long"></column>
-		<column name="hash" type="String" primary="false"></column>
-		<column name="originalUrl" type="String"></column>
-		<column name="privateUrl" type="boolean"></column>
-		<column name="protectedUrl" type="boolean"></column>
-		<column name="password" type="String"></column>
-		<column name="createdDate" type="Date"></column>
-		<column name="modifiedDate" type="Date"></column>
-		<column name="archived" type="boolean"></column>
-		<column name="customUrl" type="boolean"></column>
-		<column name="qrcode" type="boolean"></column>
-		<column name="statistics" type="boolean"></column>
+		<column name="urlId" type="long" primary="true" />
+		<column name="userId" type="long" />
+		<column name="companyId" type="long" />
+		<column name="groupId" type="long" />
+		<column name="hash" type="String" primary="false" />
+		<column name="originalUrl" type="String" />
+		<column name="privateUrl" type="boolean" />
+		<column name="protectedUrl" type="boolean" />
+		<column name="password" type="String" />
+		<column name="createdDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+		<column name="archived" type="boolean" />
+		<column name="customUrl" type="boolean" />
+		<column name="qrcode" type="boolean" />
+		<column name="statistics" type="boolean" />
+		<column name="favicon" type="String" />
+		<column name="preview" type="String" />
+		<column name="status" type="int" />
+		<column name="expirationDate" type="Date" />
+		<column name="oneTimeUrl" type="boolean" />
+
+		<finder name="ExpirationDate" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="expirationDate" comparator="&lt;=" />
+		</finder>
 
 		<finder name="C_G_U" return-type="long">
-			<finder-column name="companyId"></finder-column>
-			<finder-column name="groupId"></finder-column>
-			<finder-column name="userId"></finder-column>
+			<finder-column name="companyId" />
+			<finder-column name="groupId" />
+			<finder-column name="userId" />
 		</finder>
 		<finder name="C_G_H" return-type="Collection" unique="true">
-			<finder-column name="companyId"></finder-column>
-			<finder-column name="groupId"></finder-column>
-			<finder-column name="hash"></finder-column>
+			<finder-column name="companyId" />
+			<finder-column name="groupId" />
+			<finder-column name="hash" />
 		</finder>
 		<finder name="C_G_H_P_P_A" return-type="Collection">
-			<finder-column name="companyId"></finder-column>
-			<finder-column name="groupId"></finder-column>
-			<finder-column name="hash"></finder-column>
-			<finder-column name="privateUrl"></finder-column>
-			<finder-column name="protectedUrl"></finder-column>
-			<finder-column name="archived"></finder-column>
+			<finder-column name="companyId" />
+			<finder-column name="groupId" />
+			<finder-column name="hash" />
+			<finder-column name="privateUrl" />
+			<finder-column name="protectedUrl" />
+			<finder-column name="archived" />
 		</finder>
 		<finder name="C_G_H_P_P" return-type="Collection">
-			<finder-column name="companyId"></finder-column>
-			<finder-column name="groupId"></finder-column>
-			<finder-column name="hash"></finder-column>
-			<finder-column name="privateUrl"></finder-column>
-			<finder-column name="protectedUrl"></finder-column>
+			<finder-column name="companyId" />
+			<finder-column name="groupId" />
+			<finder-column name="hash" />
+			<finder-column name="privateUrl" />
+			<finder-column name="protectedUrl" />
 		</finder>
 		<finder name="C_G_H_Private_A" return-type="Colection">
-			<finder-column name="companyId"></finder-column>
-			<finder-column name="groupId"></finder-column>
-			<finder-column name="hash"></finder-column>
-			<finder-column name="privateUrl"></finder-column>
-			<finder-column name="archived"></finder-column>
+			<finder-column name="companyId" />
+			<finder-column name="groupId" />
+			<finder-column name="hash" />
+			<finder-column name="privateUrl" />
+			<finder-column name="archived" />
 		</finder>
 	</entity>
 	<exceptions>

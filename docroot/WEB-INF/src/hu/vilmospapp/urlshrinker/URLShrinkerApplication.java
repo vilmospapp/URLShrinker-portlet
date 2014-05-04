@@ -15,6 +15,8 @@ import com.vaadin.ui.Window;
 import com.vaadin.ui.Window.Notification;
 import com.vaadin.ui.themes.Reindeer;
 
+import hu.vilmospapp.urlshrinker.form.UrlFormLayout;
+
 import java.util.Locale;
 
 import javax.portlet.ActionRequest;
@@ -66,7 +68,7 @@ public class URLShrinkerApplication extends Application implements
 				(PortletApplicationContext2) getContext();
 			ctx.addPortletListener(this, this);
 			ctx.addTransactionListener(this);
-			_urlFormLayout = new UrlFormLayout(getLocale());
+			_urlFormLayout = new UrlFormLayout(getLocale(), _portalUrl);
 		}
 		else {
 			// should not happen with portlet 2.0
@@ -97,8 +99,10 @@ public class URLShrinkerApplication extends Application implements
 
 			Locale locale = themeDisplay.getLocale();
 
+			_portalUrl = themeDisplay.getPortalURL();
+
 			if (_urlFormLayout == null) {
-				_urlFormLayout = new UrlFormLayout(locale);
+				_urlFormLayout = new UrlFormLayout(locale, _portalUrl);
 			}
 
 			_urlFormLayout.setLocale(locale);
@@ -146,6 +150,7 @@ public class URLShrinkerApplication extends Application implements
 	private static ThreadLocal<URLShrinkerApplication> _application =
 			new ThreadLocal<URLShrinkerApplication>();
 
+	private String _portalUrl;
 	private UrlFormLayout _urlFormLayout;
 
 }

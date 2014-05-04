@@ -257,6 +257,133 @@ public interface UrlPersistence extends BasePersistence<Url> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns all the urls where companyId = &#63; and expirationDate &le; &#63;.
+	*
+	* @param companyId the company ID
+	* @param expirationDate the expiration date
+	* @return the matching urls
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<hu.vilmospapp.urlshrinker.model.Url> findByExpirationDate(
+		long companyId, java.util.Date expirationDate)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the urls where companyId = &#63; and expirationDate &le; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param expirationDate the expiration date
+	* @param start the lower bound of the range of urls
+	* @param end the upper bound of the range of urls (not inclusive)
+	* @return the range of matching urls
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<hu.vilmospapp.urlshrinker.model.Url> findByExpirationDate(
+		long companyId, java.util.Date expirationDate, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the urls where companyId = &#63; and expirationDate &le; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param expirationDate the expiration date
+	* @param start the lower bound of the range of urls
+	* @param end the upper bound of the range of urls (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching urls
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<hu.vilmospapp.urlshrinker.model.Url> findByExpirationDate(
+		long companyId, java.util.Date expirationDate, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first url in the ordered set where companyId = &#63; and expirationDate &le; &#63;.
+	*
+	* @param companyId the company ID
+	* @param expirationDate the expiration date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching url
+	* @throws hu.vilmospapp.urlshrinker.NoSuchUrlException if a matching url could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public hu.vilmospapp.urlshrinker.model.Url findByExpirationDate_First(
+		long companyId, java.util.Date expirationDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			hu.vilmospapp.urlshrinker.NoSuchUrlException;
+
+	/**
+	* Returns the first url in the ordered set where companyId = &#63; and expirationDate &le; &#63;.
+	*
+	* @param companyId the company ID
+	* @param expirationDate the expiration date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching url, or <code>null</code> if a matching url could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public hu.vilmospapp.urlshrinker.model.Url fetchByExpirationDate_First(
+		long companyId, java.util.Date expirationDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last url in the ordered set where companyId = &#63; and expirationDate &le; &#63;.
+	*
+	* @param companyId the company ID
+	* @param expirationDate the expiration date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching url
+	* @throws hu.vilmospapp.urlshrinker.NoSuchUrlException if a matching url could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public hu.vilmospapp.urlshrinker.model.Url findByExpirationDate_Last(
+		long companyId, java.util.Date expirationDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			hu.vilmospapp.urlshrinker.NoSuchUrlException;
+
+	/**
+	* Returns the last url in the ordered set where companyId = &#63; and expirationDate &le; &#63;.
+	*
+	* @param companyId the company ID
+	* @param expirationDate the expiration date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching url, or <code>null</code> if a matching url could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public hu.vilmospapp.urlshrinker.model.Url fetchByExpirationDate_Last(
+		long companyId, java.util.Date expirationDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the urls before and after the current url in the ordered set where companyId = &#63; and expirationDate &le; &#63;.
+	*
+	* @param urlId the primary key of the current url
+	* @param companyId the company ID
+	* @param expirationDate the expiration date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next url
+	* @throws hu.vilmospapp.urlshrinker.NoSuchUrlException if a url with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public hu.vilmospapp.urlshrinker.model.Url[] findByExpirationDate_PrevAndNext(
+		long urlId, long companyId, java.util.Date expirationDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			hu.vilmospapp.urlshrinker.NoSuchUrlException;
+
+	/**
 	* Returns the url where companyId = &#63; and groupId = &#63; and userId = &#63; or throws a {@link hu.vilmospapp.urlshrinker.NoSuchUrlException} if it could not be found.
 	*
 	* @param companyId the company ID
@@ -878,6 +1005,17 @@ public interface UrlPersistence extends BasePersistence<Url> {
 			hu.vilmospapp.urlshrinker.NoSuchUrlException;
 
 	/**
+	* Removes all the urls where companyId = &#63; and expirationDate &le; &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param expirationDate the expiration date
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByExpirationDate(long companyId,
+		java.util.Date expirationDate)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Removes the url where companyId = &#63; and groupId = &#63; and userId = &#63; from the database.
 	*
 	* @param companyId the company ID
@@ -977,6 +1115,18 @@ public interface UrlPersistence extends BasePersistence<Url> {
 	* @throws SystemException if a system exception occurred
 	*/
 	public int countByUUID_G(java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of urls where companyId = &#63; and expirationDate &le; &#63;.
+	*
+	* @param companyId the company ID
+	* @param expirationDate the expiration date
+	* @return the number of matching urls
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByExpirationDate(long companyId,
+		java.util.Date expirationDate)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

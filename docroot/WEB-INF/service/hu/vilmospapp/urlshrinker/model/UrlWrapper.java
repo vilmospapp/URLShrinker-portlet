@@ -62,6 +62,11 @@ public class UrlWrapper implements Url, ModelWrapper<Url> {
 		attributes.put("customUrl", getCustomUrl());
 		attributes.put("qrcode", getQrcode());
 		attributes.put("statistics", getStatistics());
+		attributes.put("favicon", getFavicon());
+		attributes.put("preview", getPreview());
+		attributes.put("status", getStatus());
+		attributes.put("expirationDate", getExpirationDate());
+		attributes.put("oneTimeUrl", getOneTimeUrl());
 
 		return attributes;
 	}
@@ -161,6 +166,36 @@ public class UrlWrapper implements Url, ModelWrapper<Url> {
 
 		if (statistics != null) {
 			setStatistics(statistics);
+		}
+
+		String favicon = (String)attributes.get("favicon");
+
+		if (favicon != null) {
+			setFavicon(favicon);
+		}
+
+		String preview = (String)attributes.get("preview");
+
+		if (preview != null) {
+			setPreview(preview);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
+		}
+
+		Date expirationDate = (Date)attributes.get("expirationDate");
+
+		if (expirationDate != null) {
+			setExpirationDate(expirationDate);
+		}
+
+		Boolean oneTimeUrl = (Boolean)attributes.get("oneTimeUrl");
+
+		if (oneTimeUrl != null) {
+			setOneTimeUrl(oneTimeUrl);
 		}
 	}
 
@@ -542,6 +577,105 @@ public class UrlWrapper implements Url, ModelWrapper<Url> {
 	*/
 	public void setStatistics(boolean statistics) {
 		_url.setStatistics(statistics);
+	}
+
+	/**
+	* Returns the favicon of this url.
+	*
+	* @return the favicon of this url
+	*/
+	public java.lang.String getFavicon() {
+		return _url.getFavicon();
+	}
+
+	/**
+	* Sets the favicon of this url.
+	*
+	* @param favicon the favicon of this url
+	*/
+	public void setFavicon(java.lang.String favicon) {
+		_url.setFavicon(favicon);
+	}
+
+	/**
+	* Returns the preview of this url.
+	*
+	* @return the preview of this url
+	*/
+	public java.lang.String getPreview() {
+		return _url.getPreview();
+	}
+
+	/**
+	* Sets the preview of this url.
+	*
+	* @param preview the preview of this url
+	*/
+	public void setPreview(java.lang.String preview) {
+		_url.setPreview(preview);
+	}
+
+	/**
+	* Returns the status of this url.
+	*
+	* @return the status of this url
+	*/
+	public int getStatus() {
+		return _url.getStatus();
+	}
+
+	/**
+	* Sets the status of this url.
+	*
+	* @param status the status of this url
+	*/
+	public void setStatus(int status) {
+		_url.setStatus(status);
+	}
+
+	/**
+	* Returns the expiration date of this url.
+	*
+	* @return the expiration date of this url
+	*/
+	public java.util.Date getExpirationDate() {
+		return _url.getExpirationDate();
+	}
+
+	/**
+	* Sets the expiration date of this url.
+	*
+	* @param expirationDate the expiration date of this url
+	*/
+	public void setExpirationDate(java.util.Date expirationDate) {
+		_url.setExpirationDate(expirationDate);
+	}
+
+	/**
+	* Returns the one time url of this url.
+	*
+	* @return the one time url of this url
+	*/
+	public boolean getOneTimeUrl() {
+		return _url.getOneTimeUrl();
+	}
+
+	/**
+	* Returns <code>true</code> if this url is one time url.
+	*
+	* @return <code>true</code> if this url is one time url; <code>false</code> otherwise
+	*/
+	public boolean isOneTimeUrl() {
+		return _url.isOneTimeUrl();
+	}
+
+	/**
+	* Sets whether this url is one time url.
+	*
+	* @param oneTimeUrl the one time url of this url
+	*/
+	public void setOneTimeUrl(boolean oneTimeUrl) {
+		_url.setOneTimeUrl(oneTimeUrl);
 	}
 
 	public boolean isNew() {

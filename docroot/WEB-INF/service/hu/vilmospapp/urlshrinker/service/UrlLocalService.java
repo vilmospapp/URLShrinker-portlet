@@ -257,4 +257,12 @@ public interface UrlLocalService extends BaseLocalService, InvokableLocalService
 	public java.lang.Object invokeMethod(java.lang.String name,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<hu.vilmospapp.urlshrinker.model.Url> getExpiredUrls(
+		long companyId, java.util.Date expirationDate);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean isHashUnique(long companyId, long groupId,
+		java.lang.String hash);
 }

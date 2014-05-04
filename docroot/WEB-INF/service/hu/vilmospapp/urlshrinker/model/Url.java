@@ -17,7 +17,7 @@ package hu.vilmospapp.urlshrinker.model;
 import com.liferay.portal.model.PersistedModel;
 
 /**
- * The extended model interface for the Url service. Represents a row in the &quot;Url&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the Url service. Represents a row in the &quot;UrlShrinker_Url&quot; database table, with each column mapped to a property of this class.
  *
  * @author Vilmos Papp
  * @see UrlModel

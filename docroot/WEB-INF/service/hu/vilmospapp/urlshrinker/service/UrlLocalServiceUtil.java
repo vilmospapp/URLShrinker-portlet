@@ -285,6 +285,16 @@ public class UrlLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static java.util.List<hu.vilmospapp.urlshrinker.model.Url> getExpiredUrls(
+		long companyId, java.util.Date expirationDate) {
+		return getService().getExpiredUrls(companyId, expirationDate);
+	}
+
+	public static boolean isHashUnique(long companyId, long groupId,
+		java.lang.String hash) {
+		return getService().isHashUnique(companyId, groupId, hash);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

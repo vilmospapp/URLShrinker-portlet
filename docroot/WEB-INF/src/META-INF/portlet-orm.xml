@@ -33,6 +33,13 @@
 			<basic name="customUrl" />
 			<basic name="qrcode" />
 			<basic name="statistics" />
+			<basic name="favicon" />
+			<basic name="preview" />
+			<basic name="status" />
+			<basic name="expirationDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="oneTimeUrl" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -40,7 +47,7 @@
 		</attributes>
 	</mapped-superclass>
 	<entity class="hu.vilmospapp.urlshrinker.model.impl.UrlImpl" name="Url">
-		<table name="Url" />
+		<table name="UrlShrinker_Url" />
 		<attributes />
 	</entity>
 </entity-mappings>
